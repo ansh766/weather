@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mumbai Weather</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .back-btn::before {
+            content: '← ';
+            margin-right: 8px;
+        }
+
+        .city-info {
+            text-align: center;
+        }
+
+        .city-name {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .country {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .main-weather {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .temperature {
+            font-size: 120px;
+            font-weight: 300;
+        }
+
+        .weather-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sun-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: rotate 20s linear infinite;
+        }
+
+        .sun-icon::before {
+            content: '☀️';
+            font-size: 40px;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .weather-status {
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        .feels-like {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .weather-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .weather-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .weather-icon-small {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .weather-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .weather-value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .additional-info {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .main-weather {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .temperature {
+                font-size: 80px;
+            }
+
+            .city-name {
+                font-size: 36px;
+            }
+
+            .weather-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .weather-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='index.html'">Back</button>
+            <div class="city-info">
+                <div class="city-name">Mumbai</div>
+                <div class="country">India</div>
+            </div>
+        </div>
+
+        <div class="main-weather">
+            <div class="temperature">31°C</div>
+            <div class="weather-icon">
+                <div class="sun-icon"></div>
+                <div class="weather-status">Clear</div>
+                <div class="feels-like">Feels like 36°C</div>
+            </div>
+        </div>
+
+        <div class="weather-grid">
+            <div class="weather-card">
+                <div class="weather-icon-small">💧</div>
+                <div class="weather-label">Humidity</div>
+                <div class="weather-value">78%</div>
+            </div>
+
+            <div class="weather-card">
+                <div class="weather-icon-small">💨</div>
+                <div class="weather-label">Wind Speed</div>
+                <div class="weather-value">8 km/h</div>
+            </div>
+
+            <div class="weather-card">
+                <div class="weather-icon-small">👁️</div>
+                <div class="weather-label">Visibility</div>
+                <div class="weather-value">10 km</div>
+            </div>
+
+            <div class="weather-card">
+                <div class="weather-icon-small">🌡️</div>
+                <div class="weather-label">Feels Like</div>
+                <div class="weather-value">36°C</div>
+            </div>
+        </div>
+
+        <div class="additional-info">
+            <div class="section-title">Additional Information</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Pressure</div>
+                    <div class="info-value">1010 hPa</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">UV Index</div>
+                    <div class="info-value">9</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Sunrise</div>
+                    <div class="info-value">06:30</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Sunset</div>
+                    <div class="info-value">19:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const location = params.get('location');
+
+  
+
+  fetch(`http://api.weatherapi.com/v1/forecast.json?key=a661743b326a493aa81140656251008&q=${location}&days=1&aqi=yes`)
+    .then(res => res.json())
+    .then(weatherData => {
+      document.querySelector('.city-name').innerText = weatherData.location.name;
+      document.querySelector('.country').innerText = weatherData.location.country;
+      document.querySelector('.temperature').innerText = weatherData.current.temp_c + "°C";
+      document.querySelector('.weather-status').innerText = weatherData.current.condition.text;
+      document.getElementsByClassName('feels-like')[0].innerText = "Feels like " + weatherData.current.feelslike_c + "°C";
+
+      // Cards
+      document.getElementsByClassName('weather-value')[0].innerText = weatherData.current.humidity + "%";
+      document.getElementsByClassName('weather-value')[1].innerText = weatherData.current.wind_kph + " km/h";
+      document.getElementsByClassName('weather-value')[2].innerText = weatherData.current.vis_km + " km";
+      document.getElementsByClassName('weather-value')[3].innerText = weatherData.current.feelslike_c + "°C";
+
+      // Additional Info
+      document.getElementsByClassName('info-value')[0].innerText = weatherData.current.pressure_mb + " hPa";
+      document.getElementsByClassName('info-value')[1].innerText = weatherData.current.uv;
+      document.getElementsByClassName('info-value')[2].innerText = weatherData.forecast.forecastday[0].astro.sunrise;
+      document.getElementsByClassName('info-value')[3].innerText = weatherData.forecast.forecastday[0].astro.sunset;
+    })
+    .catch(err => console.error(err));
+});
+
+</script>
+
+</html>

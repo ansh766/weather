@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="weather-card">
+            <div class="header">
+                <i class="fas fa-cloud-sun weather-icon"></i>
+                <h1>Weather Forecast</h1>
+                <p class="subtitle">Get current weather conditions for any location</p>
+            </div>
+            
+            <div class="input-section">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="locationInput" placeholder="Enter city name..." class="location-input" required>
+                    <button type="button" id="searchBtn" class="search-btn" onclick=
+>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="output-section" id="weatherOutput">
+                <div class="welcome-message">
+                    <i class="fas fa-map-marker-alt location-icon"></i>
+                    <h3>Welcome to Weather App</h3>
+                    <p>Enter a city name above to get started</p>
+                </div>
+            </div>
+            
+            <!-- Template for weather results (hidden by default) -->
+          
+        </div>
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>
